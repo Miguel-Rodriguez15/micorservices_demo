@@ -48,6 +48,7 @@ export class AppController {
     return this.userService.send({ cmd: 'login' }, loginUserDto);
   }
 
+  @Auth()
   @Post('roles')
   @HttpCode(HttpStatus.CREATED)
   async createRole(@Body() createRoleDto: CreateRoleDto) {
@@ -60,12 +61,14 @@ export class AppController {
     return this.userService.send({ cmd: 'find_one_role' }, id);
   }
 
+  @Auth()
   @Delete('roles/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeRole(@Param('id') id: string) {
     return this.userService.send({ cmd: 'remove_role' }, id);
   }
 
+  @Auth()
   @Post('billing')
   createInvoice(@Body() createInvoiceDto: CreateInvoiceDto) {
     return this.billingService.send(
@@ -74,16 +77,19 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Get('billing')
   findAllInvoice() {
     return this.billingService.send({ cmd: 'find_all_invoice' }, {});
   }
 
+  @Auth()
   @Get('billing/:id')
   findInvoice(@Param('id') id: string) {
     return this.billingService.send({ cmd: 'find_invoice' }, id);
   }
 
+  @Auth()
   @Patch('billing/:id')
   updateInvoice(
     @Param('id') id: string,
@@ -95,12 +101,14 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Delete('billing/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   removeInvoice(@Param('id') id: string) {
     return this.billingService.send({ cmd: 'delete_invoice' }, id);
   }
 
+  @Auth()
   @Post('inventory')
   createInventory(@Body() createProductDto: CreateProductDto) {
     return this.inventoryService.send(
@@ -108,6 +116,8 @@ export class AppController {
       createProductDto,
     );
   }
+
+  @Auth()
   @Patch('inventory/:id')
   updateProduct(
     @Param('id') id: string,
@@ -119,22 +129,26 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Delete('inventory/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   removeProduct(@Param('id') id: string) {
     return this.inventoryService.send({ cmd: 'delete_product' }, id);
   }
 
+  @Auth()
   @Get('inventory/:id')
   findProduct(@Param('id') id: string) {
     return this.inventoryService.send({ cmd: 'find_product' }, id);
   }
 
+  @Auth()
   @Get('inventory')
   findAllProducts() {
     return this.inventoryService.send({ cmd: 'find_all_products' }, {});
   }
 
+  @Auth()
   @Patch('inventory/:id/stock')
   updateStock(@Param('id') id: string, @Body() updateStockDto: UpdateStockDto) {
     return this.inventoryService.send(
@@ -143,6 +157,7 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Post('customer')
   createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
     return this.customerService.send(
@@ -151,11 +166,13 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Get('customer')
   findAllCustomer() {
     return this.customerService.send({ cmd: 'create_customer' }, {});
   }
 
+  @Auth()
   @Get('customer/:id')
   findCustomer(@Param('id') id: string) {
     return this.customerService.send({ cmd: 'find_customer' }, id);
@@ -172,12 +189,14 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Delete('customer/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   removeCustomer(@Param('id') id: string) {
     return this.customerService.send({ cmd: 'delete_customer' }, id);
   }
 
+  @Auth()
   @Post('supplier')
   createSupplier(@Body() createSupplierDto: CreateSupplierDto) {
     return this.supplierService.send(
@@ -186,16 +205,19 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Get('supplier')
   findAllSupplier() {
     return this.supplierService.send({ cmd: 'find_all_supplier' }, {});
   }
 
+  @Auth()
   @Get('supplier/:id')
   findSupplier(@Param('id') id: string) {
     return this.supplierService.send({ cmd: 'find_supplier' }, id);
   }
 
+  @Auth()
   @Patch('supplier/:id')
   updateSupplier(
     @Param('id') id: string,
@@ -210,6 +232,7 @@ export class AppController {
     );
   }
 
+  @Auth()
   @Delete('supplier/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   removeSupplier(@Param('id') id: string) {
