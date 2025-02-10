@@ -257,7 +257,6 @@ export class BillingServiceService {
     try {
       const invoice = await this.findOne(id);
 
-      // Revert inventory changes
       const items = await this.invoiceItemRepository.find({
         where: { invoiceId: id },
       });
@@ -271,10 +270,8 @@ export class BillingServiceService {
           .toPromise();
       }
 
-      // Delete invoice items first
       await this.invoiceItemRepository.delete({ invoiceId: id });
 
-      // Delete invoice
       await this.invoiceRepository.remove(invoice);
 
       return { message: 'Invoice deleted successfully' };

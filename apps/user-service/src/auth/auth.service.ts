@@ -55,7 +55,6 @@ export class AuthService {
         throw error;
       }
 
-      // Si es un error de base de datos u otro error técnico
       throw new RpcException({
         message: 'Authentication error',
         statusCode: 500,
