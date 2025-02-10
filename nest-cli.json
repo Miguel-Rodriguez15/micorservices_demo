@@ -36,6 +36,42 @@
       "compilerOptions": {
         "tsConfigPath": "apps/user-service/tsconfig.app.json"
       }
+    },
+    "billing-service": {
+      "type": "application",
+      "root": "apps/billing-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/billing-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/billing-service/tsconfig.app.json"
+      }
+    },
+    "inventory-service": {
+      "type": "application",
+      "root": "apps/inventory-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/inventory-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/inventory-service/tsconfig.app.json"
+      }
+    },
+    "customer-service": {
+      "type": "application",
+      "root": "apps/customer-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/customer-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/customer-service/tsconfig.app.json"
+      }
+    },
+    "supplier-service": {
+      "type": "application",
+      "root": "apps/supplier-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/supplier-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/supplier-service/tsconfig.app.json"
+      }
     }
   }
 }
