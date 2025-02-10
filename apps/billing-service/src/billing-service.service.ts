@@ -49,8 +49,7 @@ export class BillingServiceService {
         } catch (inventoryError) {
           this.logger.error(inventoryError);
           throw new RpcException({
-            message:
-              'Error al actualizar el stock en el servicio de inventario',
+            message: 'Error updating stock in inventory service',
             statusCode: 500,
           });
         }

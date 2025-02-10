@@ -78,7 +78,6 @@ export class InventoryService {
 
   async updateStock(id: string, quantity: number) {
     try {
-      console.log(`updateStock llamado con id: ${id}, quantity: ${quantity}`);
       const product = await this.findOne(id);
       if (product.stock + quantity < 0) {
         throw new RpcException({

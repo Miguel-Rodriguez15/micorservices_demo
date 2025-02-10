@@ -37,7 +37,6 @@ export class InventoryServiceController {
 
   @MessagePattern({ cmd: 'update_stock' })
   updateStock(@Payload() payload: { id: string; quantity: number }) {
-    console.log('📩 Mensaje recibido en Inventory:', payload);
     return this.inventoryService.updateStock(payload.id, payload.quantity);
   }
 }
