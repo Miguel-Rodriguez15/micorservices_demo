@@ -20,14 +20,12 @@ import { Role } from '../../src/roles/entities/role.entity';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        return {
-          secret: configService.get('JWT_SECRET'),
-          signOptions: {
-            expiresIn: '8h',
-          },
-        };
-      },
+      useFactory: async () => ({
+        secret: 'secret', // Replace with your actual secret
+        signOptions: {
+          expiresIn: '8h',
+        },
+      }),
     }),
   ],
   controllers: [AuthController],
