@@ -58,28 +58,72 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
-## Resources
 
-Check out a few resources that may come in handy when working with NestJS:
+# Microservices Demo - imafeberblue
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/imafeberblue/microservices-demo/actions)
+[![License](https://img.shields.io/badge/license-MIT-blue)](https://opensource.org/licenses/MIT)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](code_of_conduct.md)
 
-## Support
+This project is a demonstration of a microservices system built with NestJS and Java, designed to evaluate the ability to implement and manage a complete microservices architecture.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🎯 Objective
 
-## Stay in touch
+The main objective of this test is to demonstrate the ability to:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+*   Design and build a scalable microservices system.
+*   Implement TCP communication between microservices.
+*   Implement an API Gateway as a single point of entry.
+*   Handle authentication and authorization with JWT.
+*   Manage PostgreSQL and MySQL databases.
 
-## License
+## ✨ Features
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+The system includes the following microservices:
+
+*   **API Gateway:** Single point of entry, JWT authentication, load balancing.
+*   **User Authentication and Registration:** Registration, authentication, and JWT token generation (PostgreSQL).
+*   **Inventory Management:** CRUD of products (MySQL).
+*   **Supplier Management:** CRUD of suppliers (MySQL).
+*   **Customer Management:** CRUD of customers (MySQL).
+*   **Billing Management:** CRUD of invoices, returns management (MySQL).
+
+## 🚀 Technologies Used
+
+*   **Languages:**
+    *   [NestJS](https://nestjs.com/) (API Gateway, Microservices)
+*   **Databases:**
+    *   [PostgreSQL](https://www.postgresql.com/) (Authentication and Users)
+    *   [MySQL](https://www.mysql.com/) (Inventory, Suppliers, Customers, Billing)
+*   **Communication:**
+    *   TCP (JSON over TCP)
+*   **Authentication:**
+    *   JWT (JSON Web Tokens)
+
+### Execution Steps
+
+1.  **Clone the repository:**
+
+    ```
+    git clone https://github.com/imafeberblue/microservices-demo.git
+    cd microservices-demo
+    ```
+
+4.  **Access the API Gateway:**
+
+    Once all containers are running, you can access the API Gateway at `http://localhost:3000` (or the port you configured).
+
+### Endpoints
+
+Here are some example endpoints (this will depend on the actual implementation of your microservices):
+
+*   **User Registration:** `POST /auth/register`
+*   **Authentication:** `POST /auth/login`
+*   **Create Product:** `POST /inventory/products`
+*   **List Products:** `GET /inventory/products`
+*   **Create Customer:** `POST /customers`
+*   **List Customers:** `GET /customers`
+*   **Create Invoice:** `POST /billing/invoices`
+*   **List Invoices:** `GET /billing/invoices`
+
+(Be sure to document all available endpoints for each microservice).
