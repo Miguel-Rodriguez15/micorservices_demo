@@ -113,17 +113,186 @@ The system includes the following microservices:
 
     Once all containers are running, you can access the API Gateway at `http://localhost:3000` (or the port you configured).
 
-### Endpoints
+### Create a user or if you already have one please log in.
 
-Here are some example endpoints (this will depend on the actual implementation of your microservices):
+In every request you must be logged in and attach the token in bearer token to be able to access the rest of the
+access to the rest of the endpoints
+**User Registration:** `POST /user
+* **Authentication:** `POST /login`
 
-*   **User Registration:** `POST /auth/register`
-*   **Authentication:** `POST /auth/login`
-*   **Create Product:** `POST /inventory/products`
-*   **List Products:** `GET /inventory/products`
-*   **Create Customer:** `POST /customers`
-*   **List Customers:** `GET /customers`
-*   **Create Invoice:** `POST /billing/invoices`
-*   **List Invoices:** `GET /billing/invoices`
 
-(Be sure to document all available endpoints for each microservice).
+## 🌐 API Endpoints
+
+This section details the API endpoints exposed by the API Gateway.  All endpoints, unless otherwise noted, require JWT authentication.
+
+### User Service
+
+*   **`POST /users`**: Create a new user.
+    ```
+    {
+      "username": "newuser",
+      "password": "password123",
+      "email": "newuser@example.com"
+    }
+    ```
+*   **`POST /login`**: Authenticate a user and receive a JWT.
+    ```
+    {
+      "username": "existinguser",
+      "password": "password123"
+    }
+    ```
+*   **`POST /roles`**:  Create a new role (Admin Only).
+    ```
+    {
+      "name": "administrator",
+      "description": "Full access role"
+    }
+    ```
+*   **`GET /roles/:id`**: Get a role by ID (Admin Only).
+*   **`DELETE /roles/:id`**: Delete a role by ID (Admin Only).
+
+### Billing Service
+
+*   **`POST /billing`**: Create a new invoice.
+    ```
+    {
+      "customerId": "customer123",
+      "items": [
+        {
+          "productId": "product456",
+          "quantity": 2
+        }
+      ]
+    }
+    ```
+*   **`GET /billing`**: Get all invoices.
+*   **`GET /billing/:id`**: Get an invoice by ID.
+*   **`PATCH /billing/:id`**: Update an invoice by ID.
+    ```
+    {
+      "status": "paid"
+    }
+    ```
+*   **`DELETE /billing/:id`**: Delete an invoice by ID.
+
+### Inventory Service
+
+*   **`POST /inventory`**: Create a new product.
+    ```
+    {
+      "name": "Awesome Product",
+      "description": "A really cool item",
+      "price": 29.99,
+      "stock": 100
+    }
+    ```
+*   **`GET /inventory`**: Get all products.
+*   **`GET /inventory/:id`**: Get a product by ID.
+*   **`PATCH /inventory/:id`**: Update a product by ID.
+    ```
+    {
+      "price": 39.99
+    }
+    ```
+*   **`DELETE /inventory/:id`**: Delete a product by ID.
+*   **`PATCH /inventory/:id/stock`**: Update product stock.
+    ```
+    {
+      "stock": 50
+    }
+    ```
+
+### Customer Service
+
+*   **`POST /customer`**: Create a new customer.
+    ```
+    {
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "phone": "555-1234"
+    }
+    ```
+*   **`GET /customer`**: Get all customers.
+*   **`GET /customer/:id`**: Get a customer by ID.
+*   **`PATCH /customer/:id`**: Update a customer by ID.
+    ```
+    {
+      "email": "john.new@example.com"
+    }
+    ```
+*   **`DELETE /customer/:id`**: Delete a customer by ID.
+
+### Supplier Service
+
+*   **`POST /supplier`**: Create a new supplier.
+    ```
+    {
+      "name": "Acme Corp",
+      "contactEmail": "sales@acme.com",
+      "phoneNumber": "555-5678"
+    }
+    ```
+*   **`GET /supplier`**: Get all suppliers.
+*   **`GET /supplier/:id`**: Get a supplier by ID.
+*   **`PATCH /supplier/:id`**: Update a supplier by ID.
+    ```
+    {
+      "contactEmail": "support@acme.com"
+    }
+    ```
+*   **`DELETE /supplier/:id`**: Delete a supplier by ID.
+
+**Notes:**
+
+*   The request body should be in JSON format.
+*   Authentication is required for all endpoints except `POST /users` (user creation) and `POST /login` (authentication).
+*   `HttpCode(HttpStatus.NO_CONTENT)` indicates a successful deletion.
+*   Example request bodies are provided for clarity; adjust based on the actual DTO definitions.
+
+
+### Role-Based Access Control (RBAC) Example
+
+The `@Auth()` decorator is used to protect endpoints and restrict access based on user roles. Here's an example demonstrating how access can be controlled:
+
+**1. Endpoint accessible to any authenticated user:**
+
+```ruby
+@Auth()
+@Post('billing')
+createInvoice(@Body() createInvoiceDto: CreateInvoiceDto) {
+return this.billingService.send(
+{ cmd: 'create_invoice' },
+createInvoiceDto,
+);
+}
+```
+
+
+In this case, any user who is authenticated (has a valid JWT) can access the `createInvoice` endpoint.
+
+**2. Endpoint accessible only to users with the 'admin' role:**
+
+```ruby
+@Auth('admin')
+@Post('billing')
+createInvoice(@Body() createInvoiceDto: CreateInvoiceDto) {
+return this.billingService.send(
+{ cmd: 'create_invoice' },
+createInvoiceDto,
+);
+}
+```
+
+
+Here, only users who have the 'admin' role assigned to them will be authorized to access the `createInvoice` endpoint.  If a user without the 'admin' role attempts to access this endpoint, they will receive a `403 Forbidden` error.
+
+**Explanation:**
+
+*   The `@Auth()` decorator checks for the presence of a valid JWT in the request.
+*   If a role is specified (e.g., `@Auth('admin')`), the decorator further validates that the user has the specified role.
+*   This mechanism allows for fine-grained control over access to different parts of the API.
+
+**Important:**
+
+*   The exact implementation of role validation will depend on how you've configured your authentication and authorization logic.  This example assumes that user roles are stored and accessible from within the microservice context.
